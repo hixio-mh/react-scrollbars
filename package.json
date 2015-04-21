@@ -20,20 +20,30 @@
   "homepage": "https://github.com/ojame/react-scrollbars",
   "devDependencies": {
     "autoprefixer-loader": "^1.0.0",
+    "browserify": "^9.0.8",
+    "browserify-shim": "^3.8.5",
     "css-loader": "^0.9.0",
+    "envify": "^3.4.0",
     "html-loader": "^0.2.3",
     "jsx-loader": "^0.12.2",
     "markdown-loader": "^0.1.2",
     "normalize.css": "^3.0.2",
+    "react-hot-loader": "^1.1.1",
+    "reactify": "^1.1.0",
     "sass-loader": "^0.3.1",
     "style-loader": "^0.8.2",
+    "uglify-js": "^2.4.20",
     "url-loader": "^0.5.5",
     "webpack": "^1.4.13",
-    "webpack-dev-server": "^1.6.6",
-    "react-hot-loader": "^1.1.1"
+    "webpack-dev-server": "^1.6.6"
   },
   "dependencies": {
     "react": "^0.12.2",
     "lodash-node": "^2.4.1"
+  },
+  "browserify-shim": {
+    "react": "global:React",
+    "react/addons": "global:React",
+    "lodash-node": "global:_"
   }
 }
