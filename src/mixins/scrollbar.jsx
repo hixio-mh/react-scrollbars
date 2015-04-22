@@ -7,6 +7,7 @@ require('./scrollbar.scss');
 var ScrollbarMixin = {
   getInitialState: function() {
     return {
+      fixedScrollbar: false,
       stickPosition: {
         horizontal: 0,
         vertical: 0
@@ -29,7 +30,8 @@ var ScrollbarMixin = {
 
   getDefaultProps: function() {
     return {
-      scrollbarOffset: 2
+      scrollbarOffset: 2,
+      scrollbarAffix: false
     };
   },
 
@@ -222,6 +224,7 @@ var ScrollbarMixin = {
       stickLength: this.getStickLength(),
       scrollbarLength: this.getScrollbarLength(),
       stickPosition: this.state.stickPosition,
+      fixedScrollbar: this.state.fixedScrollbar,
       onMouseDown: this.handleMouseDown,
       showScrollbar: this.scrollbarRequired(),
       offset: this.props.scrollbarOffset

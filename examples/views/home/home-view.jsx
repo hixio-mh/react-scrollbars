@@ -5,6 +5,7 @@ var BothScrollbar = require('./examples/both-scrollbar.jsx');
 var HorizontalScrollbar = require('./examples/horizontal-scrollbar.jsx');
 var VerticalScrollbar = require('./examples/vertical-scrollbar.jsx');
 var CustomScrollbar = require('./examples/custom-scrollbar.jsx');
+var AffixScrollbar = require('./examples/affix-scrollbar.jsx');
 
 require('./home-view.scss');
 
@@ -33,6 +34,7 @@ module.exports = React.createClass({
                 <li><a href="#vertical">Vertical</a></li>
                 <li><a href="#horizontal">Horizontal</a></li>
                 <li><a href="#both">Both</a></li>
+                <li><a href="#affix">Affix</a></li>
                 <li><a href="#implementation">Implementation</a></li>
               </ul>
             </nav>
@@ -57,6 +59,11 @@ module.exports = React.createClass({
             <div className="Home-content-block" id="custom">
               <h3>Custom Scrollbars</h3>
               <CustomScrollbar />
+            </div>
+
+            <div className="Home-content-block" id="affix">
+              <h3>Horizontal Affix Scrollbars</h3>
+              <AffixScrollbar />
             </div>
 
             <div className="Home-content-block" id="implementation">
