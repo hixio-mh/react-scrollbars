@@ -6,11 +6,46 @@ var React = (typeof window !== "undefined" ? window.React : typeof global !== "u
 var ScrollbarMixin = require('../mixins/scrollbar');
 var Scrollbar = require('./scrollbar');
 
+
+
+function offsetTop(elm) {
+  var test = elm, top = 0;
+  while(!!test && test.tagName.toLowerCase() !== "body") {
+    top += test.offsetTop;
+    test = test.offsetParent;
+  }
+  return top;
+}
+
+function viewportHeight() {
+  var de = document.documentElement;
+  if(!!window.innerWidth) { 
+    return window.innerHeight; 
+  } else if( de && !isNaN(de.clientHeight) ) { 
+    return de.clientHeight; 
+  }
+  return 0;
+}
+
+function scrollTop() {
+  if( window.pageYOffset ) { 
+    return window.pageYOffset; 
+  }
+  return Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+}
+
+
 var ScrollbarWrapper = React.createClass({displayName: "ScrollbarWrapper",
   mixins: [ScrollbarMixin],
 
   componentDidMount: function() {
     window.addEventListener('message', this.handleReceive, false);
+    window.addEventListener('scroll', this.handleWindowScroll, false);
+  },
+
+  componentWillUnmount: function() {
+    window.removeEventListener('message', this.handleReceive, false);
+    window.removeEventListener('scroll', this.handleWindowScroll, false);
   },
 
   handleReceive: function(event) {
@@ -21,6 +56,14 @@ var ScrollbarWrapper = React.createClass({displayName: "ScrollbarWrapper",
     }
   },
 
+  handleWindowScroll: function (event) {
+    if(this.props.scrollbarAffix) {
+      this.setState({
+        fixedScrollbar: this.isPartiallyVisible()
+      });
+    }
+  },
+
   onResize: function() {
     this.handleContentResize();
   },
@@ -28,8 +71,8 @@ var ScrollbarWrapper = React.createClass({displayName: "ScrollbarWrapper",
   render: function() {
     return (
       React.createElement("div", {style: this.scrollbarContainerStyle(), className: this.containerClass()}, 
-        React.createElement("div", {ref: "scrollableContent", style: this.scrollbarContentStyle(), onScroll: this.handleScroll, className: this.props.className}, 
-          React.createElement("div", {className: "ScrollbarChildren", style: {position: 'relative'}}, 
+        React.createElement("div", {ref: "scrollableContent", style: this.scrollbarContentStyle(), onScroll: this.handleScroll, className: this.props.className + ' ScrollbarContent'}, 
+          React.createElement("div", {className: "ScrollbarChildren", style: {position: 'relative', paddingBottom: this.state.nativeScrollbarWidth}}, 
             this.props.children, 
 
             React.createElement("iframe", {style: {width: '100%', height: '100%', position: 'absolute', top: '-100%', left: '-100%'}, frameBorder: "0", src: "javascript:window.onresize=function(){parent.postMessage({'func': 'onResize'}, '*')}"})
@@ -41,7 +84,20 @@ var ScrollbarWrapper = React.createClass({displayName: "ScrollbarWrapper",
         )
       )
     );
+  },
+
+    // returns true if parts, but not the bottom border, of the scroll container are visible in the current viewport
+  isPartiallyVisible: function() {
+    var containerEl = this.getDOMNode();
+    var elTop = offsetTop(containerEl);
+    var elBottom = elTop + containerEl.clientHeight;
+
+    var vpTop = scrollTop(); 
+    var vpBottom = vpTop + viewportHeight();
+
+    return ((elTop <= vpBottom) && (elBottom >= vpBottom));
   }
+
 });
 
 module.exports = ScrollbarWrapper;
@@ -56,6 +112,7 @@ var Scrollbar = React.createClass({displayName: "Scrollbar",
   getDefaultProps: function() {
     return {
       offset: 2,
+      fixedScrollbar: false,
       scrollbarThickness: 10,
       stickLength: {
         horizontal: 100,
@@ -102,6 +159,14 @@ var Scrollbar = React.createClass({displayName: "Scrollbar",
     }
   },
 
+  getTransform: function(x, y) {
+    var translate = 'translate(' + x + 'px, ' + y + 'px)';
+    return {
+      WebkitTransform: translate,
+      transform: translate
+    };
+  },
+
   render: function() {
     if (!this.props.render) {
       return React.createElement("div", null);
@@ -142,25 +207,25 @@ var Scrollbar = React.createClass({displayName: "Scrollbar",
     }, scrollbarStyle);
 
     var scrollbarStyleHorizontal = _.extend({
-      left: this.props.offset,
+      marginLeft: this.props.offset,
       bottom: this.props.offset,
       width: horizontalScrollbarWidth || 'auto',
-      right: horizontalScrollbarWidth ? 'auto' : this.props.offset,
+      marginRight: horizontalScrollbarWidth ? 'auto' : this.props.offset,
       height: this.props.scrollbarThickness
-    }, scrollbarStyle);
+    }, scrollbarStyle, this.props.fixedScrollbar && {
+      position: 'fixed'
+    });
 
     var scrollbarStickStyleVertical = _.extend({
       width: this.props.scrollbarThickness,
       height: this.props.stickLength.vertical,
-      top: this.props.stickPosition.vertical,
       right: 0
-    }, stickStyle);
+    }, this.getTransform(0, this.props.stickPosition.vertical), stickStyle);
 
     var scrollbarStickStyleHorizontal = _.extend({
       height: this.props.scrollbarThickness,
-      width: this.props.stickLength.horizontal,
-      left: this.props.stickPosition.horizontal
-    }, stickStyle);
+      width: this.props.stickLength.horizontal
+    }, this.getTransform(this.props.stickPosition.horizontal, 0), stickStyle);
 
     return (
       React.createElement("div", {className: "Scrollbar-wrapper"}, 
@@ -192,6 +257,7 @@ var _ = (typeof window !== "undefined" ? window._ : typeof global !== "undefined
 var ScrollbarMixin = {
   getInitialState: function() {
     return {
+      fixedScrollbar: false,
       stickPosition: {
         horizontal: 0,
         vertical: 0
@@ -207,20 +273,33 @@ var ScrollbarMixin = {
       axis: null,
       initialMovement: false,
       scrolling: false,
-      nativeScrollbarWidth: 15,
+      nativeScrollbarWidth: 0,
       firstRender: null
     };
   },
 
   getDefaultProps: function() {
     return {
-      scrollbarOffset: 2
+      scrollbarOffset: 2,
+      scrollbarAffix: false
     };
   },
 
   componentDidMount: function() {
+    var scrollbarElement = document.createElement('div');
+    scrollbarElement.style.width = '100px';
+    scrollbarElement.style.height = '100px';
+    scrollbarElement.style.overflow = 'scroll';
+    scrollbarElement.style.position = 'absolute';
+    scrollbarElement.style.top = '-100%';
+    scrollbarElement.style.left = '-100%';
+    document.body.appendChild(scrollbarElement);
+
     this.setState({
+      nativeScrollbarWidth: scrollbarElement.offsetWidth - scrollbarElement.clientWidth,
       firstRender: true
+    }, function() {
+      document.body.removeChild(scrollbarElement);
     });
   },
 
@@ -395,6 +474,7 @@ var ScrollbarMixin = {
       stickLength: this.getStickLength(),
       scrollbarLength: this.getScrollbarLength(),
       stickPosition: this.state.stickPosition,
+      fixedScrollbar: this.state.fixedScrollbar,
       onMouseDown: this.handleMouseDown,
       showScrollbar: this.scrollbarRequired(),
       offset: this.props.scrollbarOffset
@@ -421,11 +501,11 @@ var ScrollbarMixin = {
     var style = {};
 
     if (this.scrollbarRequired().vertical) {
-      style['padding-right'] = this.state.nativeScrollbarWidth;
+      style['paddingRight'] = this.state.nativeScrollbarWidth;
     }
 
     if (this.scrollbarRequired().horizontal) {
-      style['margin-bottom'] = this.state.nativeScrollbarWidth * -1;
+      style['marginBottom'] = this.state.nativeScrollbarWidth * -1;
     }
 
     return style;
