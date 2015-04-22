@@ -31,7 +31,7 @@ var Scrollbar = React.createClass({
   verticalScrollbar: function(style, stickStyle) {
     if (this.props.vertical && this.props.showScrollbar.vertical) {
       return (
-        <div className="Scrollbar" style={style}>
+        <div className="Scrollbar Scrollbar-vertical" style={style}>
           <div className="Scrollbar-stick" style={stickStyle} onMouseDown={this.props.onMouseDown.bind(null, 'y')}></div>
         </div>
       );
@@ -43,8 +43,8 @@ var Scrollbar = React.createClass({
   horizontalScrollbar: function(style, stickStyle) {
     if (this.props.horizontal && this.props.showScrollbar.horizontal) {
       return (
-        <div style={style}>
-          <div style={stickStyle} onMouseDown={this.props.onMouseDown.bind(null, 'x')}></div>
+        <div className="Scrollbar Scrollbar-horizontal" style={style}>
+          <div className="Scrollbar-stick" style={stickStyle} onMouseDown={this.props.onMouseDown.bind(null, 'x')}></div>
         </div>
       );
     } else {
