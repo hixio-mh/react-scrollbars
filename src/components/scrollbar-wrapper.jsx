@@ -39,12 +39,14 @@ var ScrollbarWrapper = React.createClass({
   componentDidMount: function() {
     window.addEventListener('message', this.handleReceive, false);
     window.addEventListener('scroll', this.handleWindowScroll, false);
+    window.addEventListener('resize', this.handleWindowScroll, false);
     this.handleWindowScroll();
   },
 
   componentWillUnmount: function() {
     window.removeEventListener('message', this.handleReceive, false);
     window.removeEventListener('scroll', this.handleWindowScroll, false);
+    window.removeEventListener('resize', this.handleWindowScroll, false);
   },
 
   handleReceive: function(event) {
