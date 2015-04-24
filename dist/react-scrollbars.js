@@ -162,14 +162,6 @@ var Scrollbar = React.createClass({displayName: "Scrollbar",
     }
   },
 
-  getTransform: function(x, y) {
-    var translate = 'translate(' + x + 'px, ' + y + 'px)';
-    return {
-      WebkitTransform: translate,
-      transform: translate
-    };
-  },
-
   render: function() {
     if (!this.props.render) {
       return React.createElement("div", null);
@@ -222,13 +214,15 @@ var Scrollbar = React.createClass({displayName: "Scrollbar",
     var scrollbarStickStyleVertical = _.extend({
       width: this.props.scrollbarThickness,
       height: this.props.stickLength.vertical,
-      right: 0
-    }, this.getTransform(0, this.props.stickPosition.vertical), stickStyle);
+      right: 0,
+      top: this.props.stickPosition.vertical
+    }, stickStyle);
 
     var scrollbarStickStyleHorizontal = _.extend({
       height: this.props.scrollbarThickness,
-      width: this.props.stickLength.horizontal
-    }, this.getTransform(this.props.stickPosition.horizontal, 0), stickStyle);
+      width: this.props.stickLength.horizontal,
+      left: this.props.stickPosition.horizontal
+    }, stickStyle);
 
     return (
       React.createElement("div", {className: "Scrollbar-wrapper"}, 
