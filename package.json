@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "start": "cd examples && webpack-dev-server --port 9090 --d --hot --inline --progress --colors",
-    "build": "./node_modules/jsx-loader/node_modules/.bin/jsx --harmony --no-cache-dir -x jsx src lib",
+    "build": "babel src --out-dir lib",
     "build-www": "cd examples && webpack"
   },
   "main": "lib/index.js",
@@ -20,22 +20,26 @@
   "homepage": "https://github.com/ojame/react-scrollbars",
   "devDependencies": {
     "autoprefixer-loader": "^1.0.0",
+    "babel": "^5.8.29",
+    "babel-core": "^5.8.29",
+    "babel-loader": "^5.3.2",
     "css-loader": "^0.9.0",
     "html-loader": "^0.2.3",
-    "jsx-loader": ">=0.12.2",
     "markdown-loader": "^0.1.2",
     "normalize.css": "^3.0.2",
+    "react-hot-loader": "^1.1.1",
     "sass-loader": "^0.3.1",
     "style-loader": "^0.8.2",
     "url-loader": "^0.5.5",
-    "webpack": "^1.4.13",
-    "webpack-dev-server": "^1.6.6",
-    "react-hot-loader": "^1.1.1"
+    "webpack": "^1.12.2",
+    "webpack-dev-server": "^1.6.6"
   },
   "peerDependencies": {
-    "react": ">=0.12.2"
+    "react": "^0.14.1",
+    "react-dom": "^0.14.1"
   },
   "dependencies": {
+    "classnames": "^2.2.0",
     "lodash-node": "^2.4.1"
   }
 }
