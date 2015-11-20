@@ -7,6 +7,7 @@ var _ = require('lodash-node');
 var ScrollbarMixin = {
   getInitialState: function() {
     return {
+      fixedScrollbar: false,
       stickPosition: {
         horizontal: 0,
         vertical: 0
@@ -30,7 +31,8 @@ var ScrollbarMixin = {
   getDefaultProps: function() {
     return {
       scrollbarOffset: 2,
-      overflowTolerance: 3
+      overflowTolerance: 3,
+      scrollbarAffix: false
     };
   },
 
@@ -227,6 +229,7 @@ var ScrollbarMixin = {
       stickLength: this.getStickLength(),
       scrollbarLength: this.getScrollbarLength(),
       stickPosition: this.state.stickPosition,
+      fixedScrollbar: this.state.fixedScrollbar,
       onMouseDown: this.handleMouseDown,
       showScrollbar: this.scrollbarRequired(),
       offset: this.props.scrollbarOffset
