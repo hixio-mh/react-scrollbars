@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React = require('react');
 var BothScrollbar = require('./examples/both-scrollbar.jsx');
 var HorizontalScrollbar = require('./examples/horizontal-scrollbar.jsx');
@@ -7,7 +5,7 @@ var VerticalScrollbar = require('./examples/vertical-scrollbar.jsx');
 var CustomScrollbar = require('./examples/custom-scrollbar.jsx');
 var AffixScrollbar = require('./examples/affix-scrollbar.jsx');
 
-require('./home-view.scss');
+require('./home-view.css');
 
 module.exports = React.createClass({
 

@@ -6,7 +6,7 @@ module.exports = {
     filename: 'bundle.js',
   },
   resolve: {
-    extensions: ['', '.js', '.jsx', '.scss', '.css']
+    extensions: ['', '.js', '.jsx', '.css']
   },
   plugins: [
     new webpack.NormalModuleReplacementPlugin( // allow examples to include react-scrollbar
@@ -16,17 +16,8 @@ module.exports = {
   ],
   module: {
     loaders: [
-      { test: /\.jsx$/, loaders: ['react-hot-loader', 'jsx-loader'] },
+      { test: /\.jsx$/, loaders: ['react-hot-loader', 'babel-loader'] },
       { test: /\.css$/, loader: 'style-loader!css-loader' },
-      {
-        test: /\.scss$/,
-        loaders: [
-          'style-loader',
-          'css-loader',
-          'autoprefixer-loader',
-          'sass-loader?includePaths[]=./style-guide,includePaths[]=./node_modules,includePaths[]=./style'
-        ],
-      },
       { test: /\.(png|woff)$/, loader: 'url-loader?limit=100000' },
       { test: /\.md$/, loader: "html!markdown" }
     ]

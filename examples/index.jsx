@@ -1,11 +1,10 @@
-/** @jsx React.DOM */
 'use strict'
 var React = require('react');
 
 var Home = require('./views/home/index.jsx');
 
 require('normalize.css/normalize.css');
-require('./app.scss');
+require('./app.css');
 
 var App = React.createClass({
   render: function () {

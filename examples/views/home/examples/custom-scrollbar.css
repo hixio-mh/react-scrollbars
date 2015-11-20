@@ -1,0 +1,19 @@
+.ScrollbarContent--affix {
+  width: 100%;
+  height: 700px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background: #fdfdfd; }
+
+.ScrollbarContent--affix .ScrollbarContent--affix-columnContainer {
+  white-space: nowrap; }
+
+.ScrollbarContent--affix .ScrollbarContent--affix-column {
+  border-radius: 5px;
+  font-size: 18px;
+  background: #3498db;
+  display: inline-block;
+  width: 300px;
+  margin: 1em;
+  padding: 300px 0;
+  text-align: center; }
