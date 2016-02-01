@@ -1,6 +1,6 @@
 {
-  "name": "react-scrollbars",
-  "version": "0.0.4",
+  "name": "@signavio/react-scrollbars",
+  "version": "0.1.0",
   "description": "Stateful scrollbar component for React",
   "keywords": [
     "react-component",
@@ -8,16 +8,16 @@
   ],
   "scripts": {
     "start": "cd examples && webpack-dev-server --port 9090 --d --hot --inline --progress --colors",
-    "build": "babel src --out-dir lib",
-    "build-www": "cd examples && webpack"
+    "transpile": "babel src --out-dir lib",
+    "prepublish": "npm run transpile"
   },
   "main": "lib/index.js",
   "author": "James Coleman",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ojame/react-scrollbars/issues"
+    "url": "https://github.com/effektif/react-scrollbars/issues"
   },
-  "homepage": "https://github.com/ojame/react-scrollbars",
+  "homepage": "https://github.com/effektif/react-scrollbars",
   "devDependencies": {
     "autoprefixer-loader": "^1.0.0",
     "babel": "^5.8.29",
