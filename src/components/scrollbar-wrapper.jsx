@@ -1,5 +1,6 @@
 'use strict';
 var React = require('react');
+var ReactDOM = require('react-dom');
 
 var ScrollbarMixin = require('../mixins/scrollbar');
 var Scrollbar = require('./scrollbar');
@@ -17,17 +18,17 @@ function offsetTop(elm) {
 
 function viewportHeight() {
   var de = document.documentElement;
-  if(!!window.innerWidth) { 
-    return window.innerHeight; 
-  } else if( de && !isNaN(de.clientHeight) ) { 
-    return de.clientHeight; 
+  if(!!window.innerWidth) {
+    return window.innerHeight;
+  } else if( de && !isNaN(de.clientHeight) ) {
+    return de.clientHeight;
   }
   return 0;
 }
 
 function scrollTop() {
-  if( window.pageYOffset ) { 
-    return window.pageYOffset; 
+  if( window.pageYOffset ) {
+    return window.pageYOffset;
   }
   return Math.max(document.documentElement.scrollTop, document.body.scrollTop);
 }
@@ -89,11 +90,11 @@ var ScrollbarWrapper = React.createClass({
 
     // returns true if parts, but not the bottom border, of the scroll container are visible in the current viewport
   isPartiallyVisible: function() {
-    var containerEl = this.getDOMNode();
+    var containerEl = ReactDOM.findDOMNode(this);
     var elTop = offsetTop(containerEl);
     var elBottom = elTop + containerEl.clientHeight;
 
-    var vpTop = scrollTop(); 
+    var vpTop = scrollTop();
     var vpBottom = vpTop + viewportHeight();
 
     return ((elTop <= vpBottom) && (elBottom >= vpBottom));

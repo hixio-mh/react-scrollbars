@@ -33,12 +33,10 @@
     "webpack": "^1.12.2",
     "webpack-dev-server": "^1.6.6"
   },
-  "peerDependencies": {
-    "react": "^0.14.1",
-    "react-dom": "^0.14.1"
-  },
   "dependencies": {
     "classnames": "^2.2.0",
-    "lodash-node": "^2.4.1"
+    "lodash-node": "^2.4.1",
+    "react": "^15.0.1",
+    "react-dom": "^15.0.1"
   }
 }
