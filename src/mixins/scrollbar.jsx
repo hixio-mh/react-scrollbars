@@ -1,8 +1,8 @@
-'use strict';
-var React = require('react');
-var ReactDOM = require('react-dom');
-var classnames = require('classnames');
-var _ = require('lodash-node');
+"use strict";
+var React = require("react");
+var ReactDOM = require("react-dom");
+var classnames = require("classnames");
+var _ = require("lodash-node");
 
 var ScrollbarMixin = {
   getInitialState: function() {
@@ -37,21 +37,25 @@ var ScrollbarMixin = {
   },
 
   componentDidMount: function() {
-    var scrollbarElement = document.createElement('div');
-    scrollbarElement.style.width = '100px';
-    scrollbarElement.style.height = '100px';
-    scrollbarElement.style.overflow = 'scroll';
-    scrollbarElement.style.position = 'absolute';
-    scrollbarElement.style.top = '-100%';
-    scrollbarElement.style.left = '-100%';
+    var scrollbarElement = document.createElement("div");
+    scrollbarElement.style.width = "100px";
+    scrollbarElement.style.height = "100px";
+    scrollbarElement.style.overflow = "scroll";
+    scrollbarElement.style.position = "absolute";
+    scrollbarElement.style.top = "-100%";
+    scrollbarElement.style.left = "-100%";
     document.body.appendChild(scrollbarElement);
 
-    this.setState({
-      nativeScrollbarWidth: scrollbarElement.offsetWidth - scrollbarElement.clientWidth,
-      firstRender: true
-    }, function() {
-      document.body.removeChild(scrollbarElement);
-    });
+    this.setState(
+      {
+        nativeScrollbarWidth:
+          scrollbarElement.offsetWidth - scrollbarElement.clientWidth,
+        firstRender: true
+      },
+      function() {
+        document.body.removeChild(scrollbarElement);
+      }
+    );
   },
 
   componentDidUpdate: function() {
@@ -101,14 +105,15 @@ var ScrollbarMixin = {
       height: element.clientHeight,
       scrollHeight: element.scrollHeight,
       scrollWidth: element.scrollWidth,
-      width: element.clientWidth,
+      width: element.clientWidth
     };
   },
 
   getScrollbarLength: function() {
-    var horizontal = this.getContentDimensions().width - (this.props.scrollbarOffset * 2);
-    var vertical = this.getContentDimensions().height - (this.props.scrollbarOffset * 2);
-
+    var horizontal =
+      this.getContentDimensions().width - this.props.scrollbarOffset * 2;
+    var vertical =
+      this.getContentDimensions().height - this.props.scrollbarOffset * 2;
 
     if (this.scrollbarRequired().both) {
       horizontal = horizontal - this.state.nativeScrollbarWidth;
@@ -122,8 +127,12 @@ var ScrollbarMixin = {
   },
 
   calculateStickPosition: function(left, top) {
-    var scrollbarRatioWidth = this.getScrollbarLength().horizontal / this.getContentDimensions().scrollWidth;
-    var scrollbarRatioHeight = this.getScrollbarLength().vertical / this.getContentDimensions().scrollHeight;
+    var scrollbarRatioWidth =
+      this.getScrollbarLength().horizontal /
+      this.getContentDimensions().scrollWidth;
+    var scrollbarRatioHeight =
+      this.getScrollbarLength().vertical /
+      this.getContentDimensions().scrollHeight;
 
     return {
       horizontal: left * scrollbarRatioWidth,
@@ -137,8 +146,11 @@ var ScrollbarMixin = {
     }
 
     var dimensions = this.getContentDimensions();
-    var horizontalRequired = dimensions.scrollWidth - this.props.overflowTolerance > dimensions.width;
-    var verticalRequired = dimensions.scrollHeight - this.props.overflowTolerance > dimensions.height;
+    var horizontalRequired =
+      dimensions.scrollWidth - this.props.overflowTolerance > dimensions.width;
+    var verticalRequired =
+      dimensions.scrollHeight - this.props.overflowTolerance >
+      dimensions.height;
 
     return {
       horizontal: horizontalRequired,
@@ -149,7 +161,10 @@ var ScrollbarMixin = {
 
   handleScroll: function(event) {
     this.setState({
-      stickPosition: this.calculateStickPosition(event.target.scrollLeft, event.target.scrollTop)
+      stickPosition: this.calculateStickPosition(
+        event.target.scrollLeft,
+        event.target.scrollTop
+      )
     });
   },
 
@@ -166,8 +181,8 @@ var ScrollbarMixin = {
       scrolling: true
     });
 
-    document.addEventListener('mousemove', this.handleStickDrag);
-    document.addEventListener('mouseup', this.handleMouseUp);
+    document.addEventListener("mousemove", this.handleStickDrag);
+    document.addEventListener("mouseup", this.handleMouseUp);
   },
 
   handleMouseUp: function() {
@@ -175,18 +190,21 @@ var ScrollbarMixin = {
       scrolling: false
     });
 
-    document.removeEventListener('mousemove', this.handleStickDrag);
-    document.removeEventListener('mouseup', this.handleMouseUp);
+    document.removeEventListener("mousemove", this.handleStickDrag);
+    document.removeEventListener("mouseup", this.handleMouseUp);
   },
 
   handleStickDrag: function(event) {
     // TODO: this needs refactoring
-    var origin = this.state.axis === 'x' ? 'left' : 'top';
+    var origin = this.state.axis === "x" ? "left" : "top";
 
     var initialScrollPosition = this.state.initialScroll[origin];
 
     if (this.state.initialMovement) {
-      initialScrollPosition = origin === 'left' ? ReactDOM.findDOMNode(this.refs.scrollableContent).scrollLeft : ReactDOM.findDOMNode(this.refs.scrollableContent).scrollTop;
+      initialScrollPosition =
+        origin === "left"
+          ? ReactDOM.findDOMNode(this.refs.scrollableContent).scrollLeft
+          : ReactDOM.findDOMNode(this.refs.scrollableContent).scrollTop;
       var initialScroll = _.extend({}, this.state.initialScroll);
       initialScroll[origin] = initialScrollPosition;
 
@@ -206,10 +224,12 @@ var ScrollbarMixin = {
       y: movement.y / this.getRatio().vertical
     };
 
-    if (this.state.axis === 'x') {
-      ReactDOM.findDOMNode(this.refs.scrollableContent).scrollLeft = initialScrollPosition + scaledMovement.x;
+    if (this.state.axis === "x") {
+      ReactDOM.findDOMNode(this.refs.scrollableContent).scrollLeft =
+        initialScrollPosition + scaledMovement.x;
     } else {
-      ReactDOM.findDOMNode(this.refs.scrollableContent).scrollTop = initialScrollPosition + scaledMovement.y;
+      ReactDOM.findDOMNode(this.refs.scrollableContent).scrollTop =
+        initialScrollPosition + scaledMovement.y;
     }
   },
 
@@ -236,17 +256,18 @@ var ScrollbarMixin = {
     };
   },
 
-  containerClass: function() { // TODO: rename getStyle or something
+  containerClass: function() {
+    // TODO: rename getStyle or something
     return classnames({
-      'ScrollbarContainer': true,
-      'ScrollbarContainer--scrolling': this.state.scrolling
+      ScrollbarContainer: true,
+      "ScrollbarContainer--scrolling": this.state.scrolling
     });
   },
 
   scrollbarContainerStyle: function() {
     return {
-      position: 'relative',
-      overflow: 'hidden'
+      position: "relative",
+      overflow: "hidden"
     };
   },
 
@@ -254,11 +275,13 @@ var ScrollbarMixin = {
     var style = {};
 
     if (this.scrollbarRequired().vertical) {
-      style['paddingRight'] = this.state.nativeScrollbarWidth;
+      style.paddingRight = this.state.nativeScrollbarWidth;
+      style.overflowY = "scroll";
     }
 
     if (this.scrollbarRequired().horizontal) {
-      style['marginBottom'] = this.state.nativeScrollbarWidth * -1;
+      style.marginBottom = this.state.nativeScrollbarWidth * -1;
+      style.overflowX = "scroll";
     }
 
     return style;
