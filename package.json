@@ -6,6 +6,9 @@
     "react-component",
     "scrollbars"
   ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "scripts": {
     "start": "cd examples && webpack-dev-server --port 9090 --d --hot --inline --progress --colors",
     "transpile": "babel src --out-dir lib",
@@ -15,9 +18,9 @@
   "author": "James Coleman",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/effektif/react-scrollbars/issues"
+    "url": "https://github.com/siganvio/react-scrollbars/issues"
   },
-  "homepage": "https://github.com/effektif/react-scrollbars",
+  "homepage": "https://github.com/siganvio/react-scrollbars",
   "devDependencies": {
     "autoprefixer-loader": "^1.0.0",
     "babel": "^5.8.29",
