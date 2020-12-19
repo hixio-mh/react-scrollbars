@@ -1071,9 +1071,12 @@ hoek@2.x.x:
   version "2.16.3"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-2.16.3.tgz#20bb7403d3cea398e91dc4710a8ff1b8274a25ed"
 
-hoist-non-react-statics@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-1.2.0.tgz#aa448cf0986d55cc40773b17174b7dd066cb7cfb"
+hoist-non-react-statics@^3.1.0:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
+  integrity sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==
+  dependencies:
+    react-is "^16.7.0"
 
 home-or-tmp@^1.0.0:
   version "1.0.0"
@@ -1409,10 +1412,6 @@ lodash@^3.10.0, lodash@^3.2.0, lodash@^3.9.3:
 lodash@^4.17.2:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
-
-lodash@^4.3.0:
-  version "4.17.10"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
 
 longest@^1.0.1:
   version "1.0.1"
@@ -1913,6 +1912,11 @@ react-hot-loader@^1.1.1:
     react-hot-api "^0.4.5"
     source-map "^0.4.4"
 
+react-is@^16.7.0:
+  version "16.13.1"
+  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
+  integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
+
 react@^15.0.1:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/react/-/react-15.6.2.tgz#dba0434ab439cfe82f108f0f511663908179aa72"
@@ -2323,13 +2327,13 @@ style-loader@^0.8.2:
   dependencies:
     loader-utils "^0.2.5"
 
-substyle@^6.2.1:
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/substyle/-/substyle-6.2.1.tgz#5ac9d809dcddb0f9d287929e9dd46e6d596e31f3"
+substyle@^6.3.1:
+  version "6.3.1"
+  resolved "https://registry.yarnpkg.com/substyle/-/substyle-6.3.1.tgz#29801f06e016dda8df91b531a69338d6e096fa58"
+  integrity sha512-S25YRgVQB25cLXgGAJ7AXTYewkIB/9Fa1Y7jxkN48U4N6rbK9YhVEiF7vtPGLlJl8ebSOJ3N4t8cd6jL8MH7Uw==
   dependencies:
-    hoist-non-react-statics "^1.2.0"
+    hoist-non-react-statics "^3.1.0"
     invariant "^2.2.0"
-    lodash "^4.3.0"
     prop-types "^15.5.8"
     warning "^2.1.0"
 
